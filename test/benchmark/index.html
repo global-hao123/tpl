@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="js/benchmark.js"></script>
+<script src="../../src/tpl.js"></script>
+<script>
+/*var suite = new Benchmark.Suite;
+
+// add tests
+suite.add('RegExp#test', function() {
+  /o/.test('Hello World!');
+})
+.add('String#indexOf', function() {
+  'Hello World!'.indexOf('o') > -1;
+})
+// add listeners
+.on('cycle', function(event) {
+  console.log(String(event.target));
+})
+.on('complete', function() {
+  console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+})
+// run async
+.run({ 'async': true });*/
+</script>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/underscore-1.4.4.min.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/mustache-0.7.2.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/handlebars.1.0.0-rc.3.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/kendo.core.min.2013.1.319.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/dust-runtime-1.2.3.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/tempo-2.0.js"></script>
+
+<script src="https://rawgithub.com/danactive/js-template-engines-performance/master/lib/hogan-2.0.0.js"></script>
+
+
+<!--External Template Definitions-->
+<script type="text/x-kendo-template" id="kendoUIextTemplate"><div><h1 class='header'>#= data.header #</h1><h2 class='header2'>#= data.header2 #</h2><h3 class='header3'>#= data.header3 #</h3><h4 class='header4'>#= data.header4 #</h4><h5 class='header5'>#= data.header5 #</h5><h6 class='header6'>#= data.header6 #</h6><ul class='list'># for (var i = 0, l = data.list.length; i < l; i++) { #<li class='item'>#= data.list[i] #</li># } #</ul></div></script>
+
+<script>
+  window.sharedVariables = {
+    header: "Header",
+    header2: "Header2",
+    header3: "Header3",
+    header4: "Header4",
+    header5: "Header5",
+    header6: "Header6",
+    list: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+  };
+
+  window.mustacheTemplate = "<div><h1 class='header'>{{{header}}}</h1><h2 class='header2'>{{{header2}}}</h2><h3 class='header3'>{{{header3}}}</h3><h4 class='header4'>{{{header4}}}</h4><h5 class='header5'>{{{header5}}}</h5><h6 class='header6'>{{{header6}}}</h6><ul class='list'>{{#list}}<li class='item'>{{{.}}}</li>{{/list}}</ul></div>";
+
+  window.underscoreTemplate = _.template("<div><h1 class='header'><%= header %></h1><h2 class='header2'><%= header2 %></h2><h3 class='header3'><%= header3 %></h3><h4 class='header4'><%= header4 %></h4><h5 class='header5'><%= header5 %></h5><h6 class='header6'><%= header6 %></h6><ul class='list'><% for (var i = 0, l = list.length; i < l; i++) { %><li class='item'><%= list[i] %></li><% } %></ul></div>");
+
+  window.handlebarsTemplate = Handlebars.compile("<div><h1 class='header'>{{header}}</h1><h2 class='header2'>{{header2}}</h2><h3 class='header3'>{{header3}}</h3><h4 class='header4'>{{header4}}</h4><h5 class='header5'>{{header5}}</h5><h6 class='header6'>{{header6}}</h6><ul class='list'>{{#each list}}<li class='item'>{{this}}</li>{{/each}}</ul></div>");
+
+
+  Handlebars.template((function(){var a=Handlebars.template,b=Handlebars.templates=Handlebars.templates||{};b["template-handlebars.html"]=a(function(a,b,c,d,e){function k(a,b){var c="";return c+="<li class='item'>"+i(typeof a===h?a.apply(a):a)+"</li>",c}this.compilerInfo=[2,">= 1.0.0-rc.3"],c=c||a.helpers,e=e||{};var f="",g,h="function",i=this.escapeExpression,j=this;f+="<div><h1 class='header'>",(g=c.header)?g=g.call(b,{hash:{},data:e}):(g=b.header,g=typeof g===h?g.apply(b):g),f+=i(g)+"</h1><h2 class='header2'>",(g=c.header2)?g=g.call(b,{hash:{},data:e}):(g=b.header2,g=typeof g===h?g.apply(b):g),f+=i(g)+"</h2><h3 class='header3'>",(g=c.header3)?g=g.call(b,{hash:{},data:e}):(g=b.header3,g=typeof g===h?g.apply(b):g),f+=i(g)+"</h3><h4 class='header4'>",(g=c.header4)?g=g.call(b,{hash:{},data:e}):(g=b.header4,g=typeof g===h?g.apply(b):g),f+=i(g)+"</h4><h5 class='header5'>",(g=c.header5)?g=g.call(b,{hash:{},data:e}):(g=b.header5,g=typeof g===h?g.apply(b):g),f+=i(g)+"</h5><h6 class='header6'>",(g=c.header6)?g=g.call(b,{hash:{},data:e}):(g=b.header6,g=typeof g===h?g.apply(b):g),f+=i(g)+"</h6><ul class='list'>",g=c.each.call(b,b.list,{hash:{},inverse:j.noop,fn:j.program(1,k,e),data:e});if(g||g===0)f+=g;return f+="</ul></div>",f})})());
+
+  //Resig Template Function (modified to support ')
+  function tmpl(str) {
+              var strFunc =
+              "var p=[];" +
+                          "with(obj){p.push('" +
+  
+              str.replace(/[\r\t\n]/g, " ")
+                 .replace(/'(?=[^#]*#>)/g, "\t")
+                 .split("'").join("\\'")
+                 .split("\t").join("'")
+                 .replace(/<#=(.+?)#>/g, "',$1,'")
+                 .split("<#").join("');")
+                 .split("#>").join("p.push('")
+                 + "');}return p.join('');";
+  
+              return new Function("obj", strFunc);
+          }
+  
+  window.resig = tmpl("<div><h1 class='header'><#= header #></h1><h2 class='header2'><#= header2 #></h2><h3 class='header3'><#= header3 #></h3><h4 class='header4'><#= header4 #></h4><h5 class='header5'><#= header5 #></h5><h6 class='header6'><#= header6 #></h6><ul class='list'><# for (var i = 0, l = list.length; i < l; i++) { #><li class='item'><#= list[i] #></li><# } #></ul></div>");
+  
+  //Resig modified template function (no "with" block)
+  function tmpl2(str) {
+              var strFunc =
+              "var p=[];" +
+                          "p.push('" +
+  
+              str.replace(/[\r\t\n]/g, " ")
+                 .replace(/'(?=[^#]*#>)/g, "\t")
+                 .split("'").join("\\'")
+                 .split("\t").join("'")
+                 .replace(/<#=(.+?)#>/g, "',$1,'")
+                 .split("<#").join("');")
+                 .split("#>").join("p.push('")
+                 + "');return p.join('');";
+  
+              return new Function("data", strFunc);
+          }
+  
+  window.resig2 = tmpl2("<div><h1 class='header'><#= data.header #></h1><h2 class='header2'><#= data.header2 #></h2><h3 class='header3'><#= data.header3 #></h3><h4 class='header4'><#= data.header4 #></h4><h5 class='header5'><#= data.header5 #></h5><h6 class='header6'><#= data.header6 #></h6><ul class='list'><# for (var i = 0, l = data.list.length; i < l; i++) { #><li class='item'><#= data.list[i] #></li><# } #></ul></div>");
+
+  window.kendouiTemplate = kendo.template("<div><h1 class='header'>#= data.header #</h1><h2 class='header2'>#= data.header2 #</h2><h3 class='header3'>#= data.header3 #</h3><h4 class='header4'>#= data.header4 #</h4><h5 class='header5'>#= data.header5 #</h5><h6 class='header6'>#= data.header6 #</h6><ul class='list'># for (var i = 0, l = data.list.length; i < l; i++) { #<li class='item'>#= data.list[i] #</li># } #</ul></div>", {useWithBlock: true});
+  
+  window.kendouiTemplate2 = kendo.template("<div><h1 class='header'>#= data.header #</h1><h2 class='header2'>#= data.header2 #</h2><h3 class='header3'>#= data.header3 #</h3><h4 class='header4'>#= data.header4 #</h4><h5 class='header5'>#= data.header5 #</h5><h6 class='header6'>#= data.header6 #</h6><ul class='list'># for (var i = 0, l = data.list.length; i < l; i++) { #<li class='item'>#= data.list[i] #</li># } #</ul></div>", {useWithBlock: false});
+  
+  //Use external template definition
+  window.kendoUIAlt1 = kendo.template($("#kendoUIextTemplate").html());
+  window.kendoUIAlt2 = kendo.template($("#kendoUIextTemplate").html(), {useWithBlock: false});
+
+  window.dustTemplatePrecompiled = (function(){dust.register("dustTemplatePrecompiled",body_0);function body_0(chk,ctx){return chk.write("<div><h1 class='header'>").reference(ctx.get("header"),ctx,"h").write("</h1><h2 class='header2'>").reference(ctx.get("header2"),ctx,"h").write("</h2><h3 class='header3'>").reference(ctx.get("header3"),ctx,"h").write("</h3><h4 class='header4'>").reference(ctx.get("header4"),ctx,"h").write("</h4><h5 class='header5'>").reference(ctx.get("header5"),ctx,"h").write("</h5><h6 class='header6'>").reference(ctx.get("header6"),ctx,"h").write("</h6><ul class='list'>").section(ctx.get("list"),ctx,{"block":body_1},null).write("</ul></div>");}function body_1(chk,ctx){return chk.write("<li class='item'>").reference(ctx.getPath(true,[]),ctx,"h").write("</li>");}return body_0;})();
+
+  window.dustTemplate2 = function(content) {
+    dust.loadSource(dustTemplatePrecompiled, "dustTemplatePrecompiled");
+    dust.render("dustTemplatePrecompiled", content, function() {});
+  };
+
+  window.dustTemplatePrecompiledCached = (function(){dust.register("dustTemplatePrecompiledCached",body_0);function body_0(chk,ctx){return chk.write("<div><h1 class='header'>").reference(ctx.get("header"),ctx,"h").write("</h1><h2 class='header2'>").reference(ctx.get("header2"),ctx,"h").write("</h2><h3 class='header3'>").reference(ctx.get("header3"),ctx,"h").write("</h3><h4 class='header4'>").reference(ctx.get("header4"),ctx,"h").write("</h4><h5 class='header5'>").reference(ctx.get("header5"),ctx,"h").write("</h5><h6 class='header6'>").reference(ctx.get("header6"),ctx,"h").write("</h6><ul class='list'>").section(ctx.get("list"),ctx,{"block":body_1},null).write("</ul></div>");}function body_1(chk,ctx){return chk.write("<li class='item'>").reference(ctx.getPath(true,[]),ctx,"h").write("</li>");}return body_0;})();
+
+    dust.loadSource(dustTemplatePrecompiledCached, "dustTemplatePrecompiledCached");
+
+  window.dustTemplate3 = function(content) {
+    dust.render("dustTemplatePrecompiledCached", content, function() {});
+  };
+
+ $(document.body).append('<ul id="tempoTemplate"> <li data-template> {{header}} {{header2}} {{header3}} {{header4}} {{header5}} {{header6}} <ul><li >{{list}}</li></ul></li></ul> ');
+
+
+  var tempoPrepared = Tempo.prepare('tempoTemplate');
+ tempoTemplate = function(data) { tempoPrepared.render(data); }
+     
+     tempoTemplate()
+
+  window.hoganCompile = Hogan.compile("<div><h1 class='header'>{{{header}}}</h1><h2>class='header2'>{{{header2}}}</h2><h3 class='header3'>{{{header3}}}</h3><h4 class='header4'>{{{header4}}}</h4><h5 class='header5'>{{{header5}}}</h5><h6 class='header6'>{{{header6}}}</h6><ul class='list'>{{#list}}<li class='item'>{{{.}}}</li>{{/list}}</ul></div>");
+
+
+
+
+console.time("tpl")
+      tpl("<div><h1 class='header'>{{header}}</h1><h2 class='header2'>{{header2}}</h2><h3 class='header3'>{{header3}}</h3><h4 class='header4'>{{header4}}</h4><h5 class='header5'>{{header5}}</h5><h6 class='header6'>{{header6}}</h6><ul class='list'>{{#for item in list}}<li class='item'>{{item}}</li>{{/each}}</ul></div>", sharedVariables);
+console.timeEnd("tpl")
+      
+console.time("Mustache")
+      Mustache.render(mustacheTemplate, sharedVariables);
+console.timeEnd("Mustache")
+
+console.time("underscoreTemplate")      
+      underscoreTemplate(sharedVariables);
+console.timeEnd("underscoreTemplate")
+
+console.time("handlebarsTemplate")      
+      handlebarsTemplate(sharedVariables);
+console.timeEnd("handlebarsTemplate")
+
+console.time("Handlebars")
+      Handlebars.templates["template-handlebars.html"](sharedVariables);
+console.timeEnd("Handlebars")
+
+console.time("dustTemplate2")
+      dustTemplate2(sharedVariables);
+console.timeEnd("dustTemplate2")
+
+console.time("dustTemplate3")
+      dustTemplate3(sharedVariables);
+console.timeEnd("dustTemplate3")
+
+console.time("tempoTemplate")
+      tempoTemplate(sharedVariables);
+console.timeEnd("tempoTemplate")
+
+console.time("hoganCompile")
+      hoganCompile.render(sharedVariables);
+console.timeEnd("hoganCompile")
+
+console.time("kendouiTemplate")
+      kendouiTemplate(sharedVariables);
+console.timeEnd("kendouiTemplate")
+
+console.time("kendouiTemplate2")
+      kendouiTemplate2(sharedVariables);
+console.timeEnd("kendouiTemplate2")
+
+console.time("resig")
+      resig(sharedVariables);
+console.timeEnd("resig")
+
+console.time("resig2")
+      resig2(sharedVariables);
+console.timeEnd("resig2")
+
+
+
+
+
+var suite = new Benchmark.Suite;
+
+// add tests
+suite.add('TPL', function() {
+    tpl("<div><h1 class='header'>{{header}}</h1><h2 class='header2'>{{header2}}</h2><h3 class='header3'>{{header3}}</h3><h4 class='header4'>{{header4}}</h4><h5 class='header5'>{{header5}}</h5><h6 class='header6'>{{header6}}</h6><ul class='list'>{{#for item in list}}<li class='item'>{{item}}</li>{{/each}}</ul></div>", sharedVariables);
+})
+.add('Mustache', function() {
+    Mustache.render(mustacheTemplate, sharedVariables);
+})
+.add('underscore', function() {
+    underscoreTemplate(sharedVariables);
+})
+.add('handlebars', function() {
+    handlebarsTemplate(sharedVariables);
+})
+.add('handlebars-precompiled', function() {
+    Handlebars.templates["template-handlebars.html"](sharedVariables);
+})
+.add('dust', function() {
+    dustTemplate2(sharedVariables);
+})
+.add('dustTemplate3', function() {
+    dustTemplate3(sharedVariables);
+})
+.add('tempo', function() {
+    tempoTemplate(sharedVariables);
+})
+.add('hogan', function() {
+    hoganCompile.render(sharedVariables);
+})
+.add('kendoui', function() {
+    kendouiTemplate(sharedVariables);
+})
+.add('kendoui(No "with" block)', function() {
+    kendouiTemplate2(sharedVariables);
+})
+.add('Resig Micro Templates (modified)', function() {
+    resig(sharedVariables);
+})
+.add('Resig Micro Templates (No "with" block)', function() {
+    resig2(sharedVariables);
+})
+// add listeners
+.on('cycle', function(event) {
+  console.log(String(event.target));
+})
+.on('complete', function() {
+  console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+})
+// run async
+.run({ 'async': true });
+</script>
+
+</html>

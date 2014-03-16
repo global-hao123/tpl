@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title></head>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="code/lib/codemirror.css">
+    <link rel="stylesheet" href="code/theme/obsidian.css">
+    <style>
+*,
+*:before,
+*.after{
+    margin: 0; padding: 0; box-sizing: border-box;
+}
+.wrap{ margin: 0 auto; width: 960px;}
+
+/*.wrap textarea{ width: 100%; min-height: 100px;}*/
+
+.wrap .data{
+    /*width: 50%;*/
+    float: left;
+}
+.wrap .template{
+    overflow: hidden;
+    zoom: 1;
+}
+
+
+
+.edit-viewport{
+    width: 60%;
+    float: left;
+}
+
+.result{
+    width: 40%;
+    float: right;
+}
+
+.data{ width: 10%; opacity: .4}
+
+.template{
+    width: 90%;
+
+    border-right: 1px solid #444;
+    border-left: 1px solid #444;
+}
+
+/*.CodeMirror {border: 1px solid black;}*/
+.cm-mustache {
+    color: #FECD2F;
+    /*color: #678CB1;*/
+}
+
+.cm-gray{
+    color: #999;
+}
+
+    </style>
+<script src="../src/tpl.js"></script>
+<body>
+<div class="wrap">
+    <div class="intro" id="intro"></div>
+    <div class="edit-viewport">
+        <div class="data">
+            <textarea id="data">
+{
+  hi: '大家好',
+  about: {
+    name: '还没想好',
+    des: "我是一个基于语法分析的<strong>模板引擎</strong>, 可以用在基于 `tag` 的任意模板处理。",
+    coutry: ["China", "Amrican"]
+  },
+  num: [{small: 10}, {big: 20}],
+  "feature": {
+    "表达式": {
+        "描述": "基于 javascript 语法运算，支持管道扩展",
+        "基本语法": '{{VAR + \\"123\\" | slice(0, 3)}}'
+    }
+  },
+  idea: [
+    "为前端开发者设计，基于 JavaScript 引擎，完全忠于 JavaScript 语法，无学习成本",
+    "适用于浏览器 / node 环境（预编译）",
+    "基于原创的 AST tag 分析引擎，保证复杂结构下的解析健壮可靠，同时此引擎可以用于很多类似语法分析，比如 markdown",
+    "功能完整强大，能适用各种复杂业务逻辑",
+    "自定义扩展非常简单，内置最常用的区块语法和过滤器，其他都将以插件产出，保证核心文件在 4k 左右(gzip 压缩后控制在 2K 内)",
+    "编译速度会在保证健壮性和语法友好的同时持续优化，目前相比其他简单的模板引擎可能落后几毫秒（当前页的编译时间在 chrome 下为 14ms）"
+  ],
+  roadmap: [
+    "for 区块内实现 break coutiue",
+    "（自定义变量有没有必要？）",
+    "debug 模式，详细定位出错的具体 token 位置 行号等，同时产出可视化 debug 工具",
+    "优化编译过程, 运算部分交给 web worker",
+    "生态系统完善 npm / sublime 语法插件，snippets / 文档, cheat sheets 等",
+    "严格单元测试和基准测试"
+  ],
+  title: {
+    "welcome": "Welcome!"
+  },
+  children: {
+    Landon: {
+      list: ['ninja', 'mario', 'legos']
+    },
+    Bella: {
+      list: ['something', 'sweet']
+    }
+  }
+}
+            </textarea>
+        </div>
+        <div class="template">
+            <textarea id="template">
+
+## Expressions
+
+### Delimiter
+
+- Default
+
+```
+{{ "\{\{ expressions \}\}" }}
+```
+
+- Custom
+
+```javascript
+tpl(tpl, data, {
+
+    // begin delimiter
+    delimiterBegin: "<{",
+
+    // end delimiter
+    delimiterEnd: "}>"
+});
+```
+
+#### Variable
+
+```
+{{hi}} *Render the value of data["hi"]*
+
+{{  hi
+}} *Exception error handling*
+
+{{about.name}} *Supports `.` to assign the path of Object*
+
+{{about.coutry[1]}} *Supports `[Number]` to assign the index of Array*
+
+{{num[1].big}} *Supports too*
+
+{{hi.length}} *Supports get the length of String*
+```
+
+#### Operators(Fully supports JavaScript)
+
+- Basic operators
+
+```
+{{"prefix " + hi + about.name + " suffix"}} *String concatenation*
+
+{{hi + 1 + 1}} *Equivalent to `"hi" + 1 + 1`*
+
+{{hi + (1 + 1)}} *Equivalent to `"hi" + (1 + 1)`*
+
+{{hi + (1 + 1) / 2 % 1}} *same as JavaScript*
+```
+
+- Logical operators(Fully supports JavaScript)
+
+```
+{{xxx || "default"}} *The way to set default value*
+
+{{false || "default"}} *Notice that the `false` is Boolean type*
+
+{{"false" || "default"}} *The `"false"` is String type*
+
+{{"" || null || 0 || false || undefined || "default"}} *All are false*
+
+{{hi && "isset"}} *Also supports true determination*
+
+{{!!hi}} *use `!` or `!!` to converting data types*
+```
+
+- Dualistic operators(Fully supports JavaScript)
+
+```
+{{hi ? "true" : "false"}} *Same as Javascript*
+
+{{hi ? !!hi ? "false" : "true" : "false"}} *Same as Javascript*
+```
+
+#### Escape
+
+- HTML escape
+
+```
+{{ "<br>" }} *Html default escape*
+
+{{ "<br>" | unescape}} *Forced not escape*
+
+{{ "\{\{\}\}" }} *use `\` for delimiter escape*
+```
+
+- Delimiter escape
+
+```
+{{ "\{\{\}\}" }} *use `\` for delimiter escape*
+```
+
+#### Filters pipe
+
+- Built-in filters: `trim` `escape` `regescape` `unwrap` `decodeURIComponent` `encodeURIComponent` `decodeURI` `encodeURI` and all of the String.prototype(like `slice`, `charAt`, `toUpperCase`)
+
+```
+{{hi + "<br>" | unescape}} *Forced not escape(Html default escape)*
+
+{{"  " + hi + "  " | trim}} *trim*
+
+{{hi | slice(0, 1)}} *Native slice*
+
+{{"http://www.gitlab.pro" | encodeURIComponent}} *Native decodeURIComponent*
+
+{{about.coutry[0] | slice(0, 3) | toUpperCase}} *Native slice*
+```
+
+- Extend global filters
+
+```javascript
+tpl.filter["myGlobalFilter"] = function(str) {
+    return str + "suffix";
+}
+```
+
+- Extend private filters
+
+```javascript
+tpl(tpl, data, {
+    , filter: {
+        "myPrivateFilter": function() {
+            return str + "suffix";
+        }
+    }
+});
+```
+
+## Block
+
+- Built-in helper: `if` `for` `with` `NULL` `ROUTE`
+
+### Delimiter
+
+- Default
+
+```
+{{ "\{\{#name expression\}\}\{\{/name\}\}" }}
+```
+
+- Extend global helper
+
+```javascript
+tpl.helper["myGlobalHelper"] = function(ast, data, tpl) {
+    return tpl;
+}
+
+// {{ "\{\{#myGlobalHelper expression\}\}\{\{/name\}\}" }}
+```
+
+- Extend private filters
+
+```javascript
+tpl("// {{ "\{\{#myPrivateHelper expression\}\}\{\{/name\}\}" }}", data, {
+    , filter: {
+        "myPrivateHelper": function(ast, data, tpl) {
+            return tpl;
+        }
+    }
+});
+```
+
+#### if
+
+```
+*basic usage*
+{{#if hi}}
+{{hi}}
+{{/if}}
+
+*with `else`*
+{{#if true}}
+{{"true"}}
+{{else}}
+{{"false"}}
+{{/if}}
+
+*supports expressions*
+{{#if 2>1}}
+{{"true"}}
+{{else}}
+{{"false"}}
+{{/if}}
+
+*Notice: `hi.length` is a string "3", So, you need `+hi.length === 3` or `hi.length == 3`*
+{{#if +hi.length === 3}}
+{{"true"}}
+{{else}}
+{{"false"}}
+{{/if}}
+
+*Notice: "false" is Equivalent to `false` here, diffenrent to {{ "\{\{\"false\"\}\}" | unescape}}*
+{{#if 0 || "0" || null || undefined || true || false || NaN || "false"}}
+{{"true"}}
+{{else}}
+{{"false"}}
+{{/if}}
+```
+
+#### with
+
+```
+*Basic usage*
+{{#with about}}
+    {{name}}
+{{/with}}
+
+*More complex nested*
+{{#with about}}
+    {{#with coutry}}
+        {{#if [1] === "Amrican"}}
+            {{[1]}}
+        {{/if}}
+    {{/with}}
+{{/with}}
+```
+
+#### for
+
+```
+*Basic usage*
+*Notice: Avoid key conflicts, Recommended to use `$`*
+{{#for $item in about}}
+    {{$item}}
+{{/for}}
+
+*Built-in items: @key @index @first @last @length @total*
+{{#for $item in about}}
+    key: {{@key}}
+    value: {{$item}}
+    index: {{@index}}
+    first: {{@first}}
+    last: {{@last}}
+    length: {{@length}}
+{{/for}}
+
+*More complex nested*
+{{#for $li in children}}
+    {{#for $item in $li.list}}
+        {{#if @index == 0}}
+            first: {{$item}} | {{@index}}
+        {{else}}
+            {{#if @index == 1}}
+                second: {{$item}} | {{@index}}
+            {{else}}
+                {{@index == 2 ? $item : "empty" | toUpperCase}}
+            {{/if}}
+        {{/if}}
+    {{/for}}
+{{/for}}
+```
+
+## comments
+
+### Delimiter
+
+- Default
+
+```
+{{ "\{\{**\}\}" }}
+```
+
+```
+{{* inline comments *}} *inline comments*
+
+*multi-line comments*
+{{* 
+multi-line
+comments
+*}}
+```
+            </textarea>
+
+
+<!-- 
+<table>
+    <thead>
+        <tr>
+        {{ #for item in children.Landon.list }}
+            {{*
+            <th>{{name}}</th>
+            *}}
+            <th>{{item}}|{{name}}</th>
+        {{/for}}
+
+        {{#if children}}
+        <li>T: {{name}}</li>
+        {{else}}
+        <li class="xx">F: {{name}}</li>
+        {{/if}}
+
+        {{ # each_1 children, name}}
+            <th>{{name}}</th>
+        {{/each_1}}
+        </tr>
+
+    </thead>
+    <tbody>
+        
+        </tr>
+    </tbody>
+</table>
+
+<tr>for2:
+{{#for li in children}}
+    <td>
+    {{#for item in li.list}}
+        <ul>
+            <li>first: {{@first}} | last: {{@last}}</li>
+            {{#if xx}}
+            <li class="true">{{@index}}: {{item}}</li>
+            {{else}}
+            <li class="false">{{@index}}: {{item}}</li>
+            {{/if}}
+        </ul>
+    {{/for}}
+    </td>
+{{/for}}
+{{#each list}}
+    <li></li>
+    {{#each list2}}
+        <li></li>
+        
+    {{/each}}
+{{/each}}
+ -->
+        </div>
+    </div>
+
+
+    <div class="result">
+        <textarea id="result">
+            
+        </textarea>
+    </div>
+
+</div>
+</body>
+<script src="code/lib/codemirror.js"></script>
+<script src="code/mode/xml/xml.js"></script>
+<script src="code/mode/javascript/javascript.js"></script>
+<script src="code/mode/css/css.js"></script>
+<script src="code/mode/htmlmixed/htmlmixed.js"></script>
+<script src="code/addon/mode/overlay.js"></script>
+<script src="code/addon/emmet/emmet.js"></script>
+<script>
+
+var $template = document.getElementById("template");
+var $data = document.getElementById("data");
+var $result = document.getElementById("result");
+
+var root = {};
+
+try{
+    root = eval('(' + $data.value + ')');
+} catch(e) {
+    return false;
+}
+
+var introTpl = function() {/*!@preserve
+<h1>{{hi}}, my name is {{about.name}}!</h1>
+<p>{{about.des | unescape}}</p>
+<h2>Ideas</h2>
+<ul>
+    {{#for $i in idea}}
+    <li>{{$i}}</li>
+    {{/for}}
+</ul>
+<h2>Roadmap</h2>
+<ul>
+    {{#for $i in roadmap}}
+    <li>{{$i}}</li>
+    {{/for}}
+</ul>
+<h2>Demo</h2>
+<p>你可以实时编辑数据和模板，尝试一下语法是否符合你的预期</p>
+*/0}
+
+document.getElementById("intro").innerHTML = tpl(introTpl, root, {
+    removeLineBreaks: true
+});
+
+
+CodeMirror.defineMode("mustache", function(config, parserConfig) {
+  var mustacheOverlay = {
+    token: function(stream, state) {
+      var ch;
+      if (stream.match("{{")) {
+        while ((ch = stream.next()) != null)
+          if (ch == "}" && stream.next() == "}") break;
+        stream.eat("}");
+        return "mustache";
+      }
+      
+      while (stream.next() != null && !stream.match("{{", false)) {}
+      return null;
+    }
+  };
+  return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), mustacheOverlay);
+});
+
+
+
+function oninput(el, cb) {
+    "onpropertychange" in el
+    ? el.attachEvent('onpropertychange', function() {
+        window.event.propertyName == "value" && cb.call(el);
+    })
+    : el.addEventListener("input", cb, false);
+}
+
+var render = function() {
+
+    var root = {};
+
+    try{
+        root = eval('(' + dataEditor.getValue() + ')');
+    } catch(e) {
+        return false;
+    }
+
+    // tpl.helper["for"] = function() {
+    //     return "--------"
+    // }
+
+    resultEditor.setValue(tpl(templatEditor.getValue(), root, {
+        removeLineBreaks: false
+        , helper: {
+            // "for": function() {
+            //     return "xxxxxxxxx"
+            // }
+        }
+    }));
+}
+
+/*oninput($data, function() {
+    render();
+});
+
+oninput($template, function() {
+    render();
+});*/
+
+
+
+
+
+var delay;
+var templatEditor = CodeMirror.fromTextArea($template, {
+    mode: "mustache"
+    , theme: "obsidian"
+});
+
+templatEditor.on("change", function(editor) {
+    clearTimeout(delay);
+    delay = setTimeout(function() {
+        render();
+    }, 16);
+});
+
+templatEditor.on("focus", function(editor) {
+    $data.parentNode.style.width = "10%";
+    $template.parentNode.style.width = "90%";
+
+    $data.parentNode.style.opacity = ".4";
+    $template.parentNode.style.opacity = "1";
+});
+
+var dataEditor = CodeMirror.fromTextArea($data, {
+    mode: "text/javascript"
+    , theme: "obsidian"
+});
+
+dataEditor.on("change", function(editor) {
+    clearTimeout(delay);
+    delay = setTimeout(function() {
+        render();
+    }, 16);
+});
+
+dataEditor.on("focus", function(editor) {
+    $data.parentNode.style.width = "90%";
+    $template.parentNode.style.width = "10%";
+
+    $data.parentNode.style.opacity = "1";
+    $template.parentNode.style.opacity = ".4";
+});
+
+var resultEditor = CodeMirror.fromTextArea($result, {
+    mode: "text/html"
+    , theme: "obsidian"
+});
+
+render();
+</script>
+</html>
