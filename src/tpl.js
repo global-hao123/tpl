@@ -427,7 +427,7 @@ var UNDEF
 
         result = filters
             .shift()
-            .replace(/[\[\$@_a-zA-Z][\._a-zA-Z0-9\[\]]*/g, function($0, $1) {
+            .replace(/[\[\$@_a-zA-Z][\.\w\[\]]*/g, function($0, $1) {
 
                 // js data type keywords check
                 var value = ~"undefined true false null NaN".indexOf($0) ? "" : util.tap(data, $0);
@@ -567,7 +567,7 @@ var UNDEF
         // SETUP3 compile
         .compile();
 
-    // console.log(JSON.stringify(that.ast, null, "    "));
+    console.log(JSON.stringify(that.ast, null, "    "));
 
     return that.data ? that.tpl : that.ast;
 }

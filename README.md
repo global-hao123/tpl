@@ -11,13 +11,27 @@
 - 自定义扩展非常简单，内置最常用的区块语法和过滤器，其他都将以插件产出，保证核心文件在 4k 左右(gzip 压缩后控制在 2K 内)
 - 编译速度会在保证健壮性和语法友好的同时持续优化，目前相比其他简单的模板引擎可能落后几毫秒（当前页的编译时间在 chrome 下为 14ms）
 
+## Feature
+
+- Node(Express, Koa...) / Browsers(All) Support
+- Javascript Syntax Expression Support
+- Variable Filters Support
+- Escapes Output
+- Built-in Iteration
+- Built-in if/else/else if(TODO) Conditionals
+- Extendable Tags, Logic, and/or Filters
+- Partials / Includes(TODO)
+
 ## Roadmap
 
-- for 区块内实现 break coutiue
-- （自定义变量有没有必要？）
+- {{else if}} Conditionals supports
+- Extends / Block Template Inheritance
+- (for 区块内实现 break coutiue?)
+- (自定义变量有没有必要？)
 - debug 模式，详细定位出错的具体 token 位置 行号等，同时产出可视化 debug 工具
 - 优化编译过程, 运算部分交给 web worker
-- 生态系统完善 npm / sublime 语法插件，snippets / 文档, cheat sheets 等
+- Available via npm
+- 生态系统完善 sublime 语法插件，snippets / 文档, cheat sheets 等
 - 严格单元测试和基准测试
 
 ===========跳过废话，直接看实时 [DEMO](http://view.gitlab.pro/common-ui/tpl) 边看边试，了解语法========
