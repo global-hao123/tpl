@@ -68,12 +68,12 @@ or
 
 ```javascript
 var tpl = function(){/*!@preserve
-<!doctype html>
-<html>
-   <body>
-       <h1>{{name}}</h1>
-   </body>
-</html>
+&lt;!doctype html&gt;
+&lt;html&gt;
+   &lt;body&gt;
+       &lt;h1&gt;{{name}}&lt;/h1&gt;
+   &lt;/body&gt;
+&lt;/html&gt;
 */0}
 ```
 
