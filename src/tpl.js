@@ -682,4 +682,4 @@ window["tpl"].filter = filter;
 window["tpl"].engine = engine;
 
 // TODO Grunt
-window.module && (module.exports = window["tpl"]);
+module && (module.exports = window["tpl"]);
