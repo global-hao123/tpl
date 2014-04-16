@@ -139,7 +139,7 @@ var UNDEF
      * @return {[String]} data type, like: "array"
      */
     , type: function(obj) {
-        return ({}).toString.call(obj).replace(/^\[object (\w+)\]$/, '$1').toLowerCase();
+        return ({}).toString.call(obj).replace(/^\[object (\w+)\]$/, "$1").toLowerCase();
     }
 
     /**
@@ -180,7 +180,7 @@ var UNDEF
      * @return {[Object]}     [description]
      */
     , arrTobj: function(arr) {
-        var result = {}
+        var result = {};
         util.each(arr, function(li) {
             result[li] = li;
         });
@@ -360,7 +360,7 @@ var UNDEF
 
                 // IE not supported &apos;
                 , "'" : "#39"
-                , '"' : "quot"
+                , "\"" : "quot"
             }[$0] + ";"
         });
     }
@@ -396,7 +396,7 @@ var UNDEF
                 token.mark = (token.mark = token.content.match(/#\s*([^\s]+)/)) ? token.mark[1] : "NULL";
             }
             tpl = util.replace(tpl, function(tpl) {
-                return (helper[token.mark] || helper["NULL"])(token, data, tpl);
+                return (helper[token.mark] || helper.NULL)(token, data, tpl);
             }, token.id, token.end);
         });
         return tpl;
@@ -435,10 +435,10 @@ var UNDEF
                 // js data type keywords check
                 var value = ~"undefined true false null NaN".indexOf($0) ? "" : util.tap(data, $0);
 
-                return '"' + (value === UNDEF ? "" : value) + '"'
+                return "\"" + (value === UNDEF ? "" : value) + "\""
             })
             .replace(/#\{([^}]*)\}/g, function($0) {
-                return '"' + quotes.shift() + '"';
+                return "\"" + quotes.shift() + "\"";
             });
 
         try{
@@ -673,18 +673,18 @@ fn.compile = function() {
 }
 
 // wrapper
-window["tpl"] = function(template, data, opts) {
+var tpl = function(template, data, opts) {
     var result = new engine(template, data, opts);
     return data ? result.tpl : result.ast;
 };
 
-window["tpl"].VERSION = "0.0.1";
-window["tpl"].util = util;
-window["tpl"].helper = helper;
-window["tpl"].filter = filter;
+tpl.VERSION = "0.0.1";
+tpl.util = util;
+tpl.helper = helper;
+tpl.filter = filter;
 
 // (new tpl.engine()).ast
-window["tpl"].engine = engine;
+tpl.engine = engine;
 
-// TODO Grunt
-// module && (module.exports = window["tpl"]);
+if(typeof module !== "undefined" && typeof module.exports !== "undefined") module.exports = tpl;
+else return tpl;

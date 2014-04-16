@@ -1,0 +1,26 @@
+{
+  "name": "tpl",
+  "version": "0.1.0",
+  "description": "An awesome template engine.",
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.pro/common-ui/tpl.git"
+  },
+  "devDependencies": {
+    "gulp-changed": "~0.3.0",
+    "gulp-wrap": "*",
+    "gulp-watch": "*",
+    "gulp-serve": "*",
+    "gulp-uglify": "*",
+    "gulp-rename": "*",
+    "gulp-livereload": "~1.2.0",
+    "gulp-notify": "~1.2.4",
+    "gulp-open": "~0.2.8",
+    "gulp": "~3.6.0",
+    "hbsfy": "~1.3.2",
+    "vinyl-source-stream": "*"
+  },
+  "dependencies": {
+    
+  }
+}
