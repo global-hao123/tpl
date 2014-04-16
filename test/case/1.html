@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title></head>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="code/lib/codemirror.css">
+    <link rel="stylesheet" href="code/theme/obsidian.css">
+    <style>
+*,
+*:before,
+*.after{
+    margin: 0; padding: 0; box-sizing: border-box;
+}
+body{
+    background-color: #ffffff;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSczMDAnIGhlaWdodD0nMzAwJyB2aWV3Qm94PScwIDAgMzAwIDMwMCc+Cgk8ZGVmcz4KCQk8cGF0dGVybiBpZD0nYmx1ZXN0cmlwZScgcGF0dGVyblVuaXRzPSd1c2VyU3BhY2VPblVzZScgeD0nMCcgeT0nMCcgd2lkdGg9JzIwJyBoZWlnaHQ9JzIwJyB2aWV3Qm94PScwIDAgNDAgNDAnID4KCQk8cmVjdCB3aWR0aD0nMTEwJScgaGVpZ2h0PScxMTAlJyBmaWxsPScjZmZmZmZmJy8+CgkJCTxwYXRoIGQ9J00xLDFoNDB2NDBoLTQwdi00MCcgZmlsbC1vcGFjaXR5PScwJyBzdHJva2Utd2lkdGg9JzEnIHN0cm9rZS1kYXNoYXJyYXk9JzAsMSwxJyBzdHJva2U9JyNjY2NjY2MnLz4KCQk8L3BhdHRlcm4+IAoJCTxmaWx0ZXIgaWQ9J2Z1enonIHg9JzAnIHk9JzAnPgoJCQk8ZmVUdXJidWxlbmNlIHR5cGU9J3R1cmJ1bGVuY2UnIHJlc3VsdD0ndCcgYmFzZUZyZXF1ZW5jeT0nLjIgLjMnIG51bU9jdGF2ZXM9JzUnIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz4KCQkJPGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIGluPSd0JyB2YWx1ZXM9JzAnLz4KCQk8L2ZpbHRlcj4KCTwvZGVmcz4KCTxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J3VybCgjYmx1ZXN0cmlwZSknLz4KPHJlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsdGVyPSd1cmwoI2Z1enopJyBvcGFjaXR5PScwLjEnLz4KPC9zdmc+Cg==');
+}
+.wrap{ margin: 0 auto; width: 960px;}
+
+/*.wrap textarea{ width: 100%; min-height: 100px;}*/
+
+.wrap .data{
+    /*width: 50%;*/
+    float: left;
+}
+.wrap .template{
+    overflow: hidden;
+    zoom: 1;
+}
+
+
+
+.edit-viewport{
+    width: 60%;
+    float: left;
+}
+
+.result{
+    width: 40%;
+    float: right;
+}
+
+.data{ width: 10%; opacity: .4}
+
+.template{
+    width: 90%;
+
+    border-right: 1px solid #444;
+    border-left: 1px solid #444;
+}
+
+/*.CodeMirror {border: 1px solid black;}*/
+.cm-mustache {
+    color: #FECD2F;
+    /*color: #678CB1;*/
+}
+
+.cm-gray{
+    color: #999;
+}
+
+    </style>
+<script src="../src/tpl.js"></script>
+<body>
+<div class="wrap">
+    <div class="intro" id="intro"></div>
+    <div class="edit-viewport">
+        <div class="data">
+            <textarea id="data">{
+    "status": 0,
+    "start_index": 0,
+    "fetch_count": 6,
+    "total_number": 23,
+    "data": [{
+        "title": "\u0635\u0648\u0631 \u0627\u0644\u0635\u064a\u0641",
+        "tag1": "t811",
+        "tag2": "s851",
+        "count": 66,
+        "ImageInfo": [{
+            "image_id": "6730558538247566681",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=36944823,1020183268&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "348",
+            "display_tag": "",
+            "weight": 475
+        }],
+        "i18n_image_download": 0,
+        "i18n_image_like": 0,
+        "i18n_image_share": 0
+    }, {
+        "title": "\u0623\u0633\u0627\u062d\u0628\u064a \u0644\u0639\u064a\u062f \u0627\u0644\u0641\u0637\u0631",
+        "tag1": "t811",
+        "tag2": "s849",
+        "count": 84,
+        "ImageInfo": [{
+            "image_id": "7054216172047374198",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2199727551,635459377&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "255",
+            "display_tag": "",
+            "weight": 972
+        }, {
+            "image_id": "-3347213755180573857",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=4119758091,40429898&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "256",
+            "display_tag": "",
+            "weight": 892
+        }, {
+            "image_id": "8879178424018221865",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=3471050517,1525976051&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "232",
+            "display_tag": "",
+            "weight": 706
+        }, {
+            "image_id": "5134417113361687687",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=3939748328,2355524051&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "232",
+            "display_tag": "",
+            "weight": 704
+        }],
+        "i18n_image_download": 0,
+        "i18n_image_like": 0,
+        "i18n_image_share": 0
+    }, {
+        "title": "\u062e\u0644\u0641\u064a\u0627\u062a \u0644\u0639\u064a\u062f \u0627\u0644\u0641\u0637\u0631",
+        "tag1": "t811",
+        "tag2": "s846",
+        "count": 349,
+        "ImageInfo": [{
+            "image_id": "-4086123275986400040",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=376922743,2185242934&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "237",
+            "display_tag": "",
+            "weight": 282
+        }, {
+            "image_id": "-6555123147686880448",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2764952104,956849904&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "301",
+            "display_tag": "",
+            "weight": 146
+        }, {
+            "image_id": "6127558685574812265",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2663671114,302602918&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "294",
+            "display_tag": "",
+            "weight": 131
+        }, {
+            "image_id": "-4896225090551009973",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=490598322,93599075&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "232",
+            "display_tag": "",
+            "weight": 103
+        }],
+        "i18n_image_download": 0,
+        "i18n_image_like": 0,
+        "i18n_image_share": 0
+    }, {
+        "title": "\u0627\u0633\u0631\u0627\u0631 \u062c\u0627\u0630\u0628\u064a\u0629 \u0627\u0644\u0628\u0646\u0627\u062a",
+        "tag1": "t811",
+        "tag2": "s816",
+        "count": 598,
+        "ImageInfo": [{
+            "image_id": "1758085120272373413",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=973258466,1909874200&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "286",
+            "display_tag": "",
+            "weight": 670
+        }, {
+            "image_id": "-1015162882491966608",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=53741978,2152113334&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "254",
+            "display_tag": "",
+            "weight": 480
+        }, {
+            "image_id": "9065664275714596760",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2235825450,2569561252&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "324",
+            "display_tag": "",
+            "weight": 431
+        }, {
+            "image_id": "522031948446494949",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2614605311,380325854&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "309",
+            "display_tag": "",
+            "weight": 387
+        }],
+        "i18n_image_download": 0,
+        "i18n_image_like": 0,
+        "i18n_image_share": 0
+    }, {
+        "title": "\u0627\u0633\u0645\u064a\u062a\u0647\u0627 \u0644\u062d\u064a\u0629",
+        "tag1": "t811",
+        "tag2": "s812",
+        "count": 25,
+        "ImageInfo": [{
+            "image_id": "552324252650156644",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=3656428546,2707659817&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "281",
+            "display_tag": "null",
+            "weight": 15
+        }, {
+            "image_id": "8176889196346471107",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=1475731006,3909238143&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "234",
+            "display_tag": "null",
+            "weight": 15
+        }, {
+            "image_id": "8589064134284901717",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=3727984928,3906409354&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "348",
+            "display_tag": "null",
+            "weight": 12
+        }, {
+            "image_id": "1402176494420237454",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=1387532537,1406165871&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "348",
+            "display_tag": "null",
+            "weight": 10
+        }],
+        "i18n_image_download": 0,
+        "i18n_image_like": 0,
+        "i18n_image_share": 0
+    }, {
+        "title": "\u0623\u064a\u0633 \u0643\u0631\u064a\u0645",
+        "tag1": "t811",
+        "tag2": "s843",
+        "count": 26,
+        "ImageInfo": [{
+            "image_id": "-1213065166961657323",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2527500269,2211005791&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "347",
+            "display_tag": "",
+            "weight": 247
+        }, {
+            "image_id": "-6854411135417534445",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=3845000057,3782624907&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "285",
+            "display_tag": "",
+            "weight": 184
+        }, {
+            "image_id": "-3563694731264778561",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=3819138197,4032748254&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "317",
+            "display_tag": "",
+            "weight": 169
+        }, {
+            "image_id": "6391782946637346275",
+            "thumbnail_url": "http:\/\/g.arimgtn.baidu.com\/it\/u=2111817292,1611908840&fm=2",
+            "thumbnail_width": "232",
+            "thumbnail_height": "349",
+            "display_tag": "",
+            "weight": 158
+        }],
+        "i18n_image_download": 0,
+        "i18n_image_like": 0,
+        "i18n_image_share": 0
+    }]
+}
+
+            </textarea>
+        </div>
+        <div class="template">
+            <textarea id="template">
+            <%strip%>
+            <div class="album-recommend cf" log-mod="album-rec">
+                <textarea id="albumRecommendArea">
+                    {{#for $item in data}}
+                    <div class="album-item">
+                        <div class="album-title">
+                            <a href="/image?{{#if $item.album_id}}
+                                     
+                                     1{{$item.album_id}}1
+                                     
+                                     album=
+                                     {{$item.album_id}}
+                                     
+                                     {{else}}
+                                     
+                                     tag1={{$item.tag1}}&tag2={{$item.tag2}}
+                                     
+                                     {{/if}}
+                                     
+                                     " title="{{$item.title}}" log-pos="name" data-sort="{{#if $item.album_id}}{{$item.album_id}}{{else}}{{$item.tag1}}-{{$item.tag2}}{{/if}}">
+                                {{$item.title}}
+                            </a>
+                            <div class="album-fav">
+                                <span class="album-icon">
+                                    <i class="album-icon-outer"></i>
+                                </span>
+                                <span  class="album-count">{{$item.count}}</span>
+                            </div>
+                        </div>
+                        <div class="img-obj">
+                            <div class="big-img">
+                                <img id="img_{{$item.ImageInfo[0].image_id}}" src="{{$item.ImageInfo[0].thumbnail_url}}"/>
+                            </div>
+                            <div class="small-img">
+                                <img src="{{$item.ImageInfo[1].thumbnail_url}}"/>
+                                <img src="{{$item.ImageInfo[2].thumbnail_url}}"/>
+                                <img src="{{$item.ImageInfo[3].thumbnail_url}}"/>
+                            </div>
+                        </div>
+                        <a href="/image?{{#if $item.album_id}}album={{$item.album_id}}{{else}}tag1={{$item.tag1}}&tag2={{$item.tag2}}{{/if}}" class="img-obj-a" log-pos="img" data-sort="{{#if $item.album_id}}{{$item.album_id}}{{else}}{{$item.tag1}}-{{$item.tag2}}{{/if}}"></a>
+                    </div>
+                    {{/for}}
+                </textarea>
+            </div>
+            <%/strip%>
+            </textarea>
+
+
+<!-- 
+<table>
+    <thead>
+        <tr>
+        {{ #for item in children.Landon.list }}
+            {{*
+            <th>{{name}}</th>
+            *}}
+            <th>{{item}}|{{name}}</th>
+        {{/for}}
+
+        {{#if children}}
+        <li>T: {{name}}</li>
+        {{else}}
+        <li class="xx">F: {{name}}</li>
+        {{/if}}
+
+        {{ # each_1 children, name}}
+            <th>{{name}}</th>
+        {{/each_1}}
+        </tr>
+
+    </thead>
+    <tbody>
+        
+        </tr>
+    </tbody>
+</table>
+
+<tr>for2:
+{{#for li in children}}
+    <td>
+    {{#for item in li.list}}
+        <ul>
+            <li>first: {{@first}} | last: {{@last}}</li>
+            {{#if xx}}
+            <li class="true">{{@index}}: {{item}}</li>
+            {{else}}
+            <li class="false">{{@index}}: {{item}}</li>
+            {{/if}}
+        </ul>
+    {{/for}}
+    </td>
+{{/for}}
+{{#each list}}
+    <li></li>
+    {{#each list2}}
+        <li></li>
+        
+    {{/each}}
+{{/each}}
+ -->
+        </div>
+    </div>
+
+
+    <div class="result">
+        <textarea id="result">
+            
+        </textarea>
+    </div>
+
+</div>
+</body>
+<script src="code/lib/codemirror.js"></script>
+<script src="code/mode/xml/xml.js"></script>
+<script src="code/mode/javascript/javascript.js"></script>
+<script src="code/mode/css/css.js"></script>
+<script src="code/mode/htmlmixed/htmlmixed.js"></script>
+<script src="code/addon/mode/overlay.js"></script>
+<script src="code/addon/emmet/emmet.js"></script>
+<script>
+
+var $template = document.getElementById("template");
+var $data = document.getElementById("data");
+var $result = document.getElementById("result");
+
+var root = {};
+
+try{
+    root = eval('(' + $data.value + ')');
+} catch(e) {
+    return false;
+}
+
+var introTpl = function() {/*!@preserve
+<h1>{{hi}}, my name is {{about.name}}!</h1>
+<p>{{about.des | unescape}}</p>
+<h2>Ideas</h2>
+<ul>
+    {{#for $i in idea}}
+    <li>{{$i}}</li>
+    {{/for}}
+</ul>
+<h2>Roadmap</h2>
+<ul>
+    {{#for $i in roadmap}}
+    <li>{{$i}}</li>
+    {{/for}}
+</ul>
+<h2>Demo</h2>
+<p>你可以实时编辑数据和模板，尝试一下语法是否符合你的预期</p>
+*/0}
+
+document.getElementById("intro").innerHTML = tpl(introTpl, root, {
+    removeLineBreaks: true
+});
+
+
+CodeMirror.defineMode("mustache", function(config, parserConfig) {
+  var mustacheOverlay = {
+    token: function(stream, state) {
+      var ch;
+      if (stream.match("{{")) {
+        while ((ch = stream.next()) != null)
+          if (ch == "}" && stream.next() == "}") break;
+        stream.eat("}");
+        return "mustache";
+      }
+      
+      while (stream.next() != null && !stream.match("{{", false)) {}
+      return null;
+    }
+  };
+  return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), mustacheOverlay);
+});
+
+
+
+function oninput(el, cb) {
+    "onpropertychange" in el
+    ? el.attachEvent('onpropertychange', function() {
+        window.event.propertyName == "value" && cb.call(el);
+    })
+    : el.addEventListener("input", cb, false);
+}
+
+var render = function() {
+
+    var root = {};
+
+    try{
+        root = eval('(' + dataEditor.getValue() + ')');
+    } catch(e) {
+        return false;
+    }
+
+    // tpl.helper["for"] = function() {
+    //     return "--------"
+    // }
+
+    resultEditor.setValue(tpl(templatEditor.getValue(), root, {
+        removeLineBreaks: false
+        , helper: {
+            // "for": function() {
+            //     return "xxxxxxxxx"
+            // }
+        }
+    }));
+}
+
+/*oninput($data, function() {
+    render();
+});
+
+oninput($template, function() {
+    render();
+});*/
+
+
+
+
+
+var delay;
+var templatEditor = CodeMirror.fromTextArea($template, {
+    mode: "mustache"
+    , theme: "obsidian"
+});
+
+templatEditor.on("change", function(editor) {
+    clearTimeout(delay);
+    delay = setTimeout(function() {
+        render();
+    }, 16);
+});
+
+templatEditor.on("focus", function(editor) {
+    $data.parentNode.style.width = "10%";
+    $template.parentNode.style.width = "90%";
+
+    $data.parentNode.style.opacity = ".4";
+    $template.parentNode.style.opacity = "1";
+});
+
+var dataEditor = CodeMirror.fromTextArea($data, {
+    mode: "text/javascript"
+    , theme: "obsidian"
+});
+
+dataEditor.on("change", function(editor) {
+    clearTimeout(delay);
+    delay = setTimeout(function() {
+        render();
+    }, 16);
+});
+
+dataEditor.on("focus", function(editor) {
+    $data.parentNode.style.width = "90%";
+    $template.parentNode.style.width = "10%";
+
+    $data.parentNode.style.opacity = "1";
+    $template.parentNode.style.opacity = ".4";
+});
+
+var resultEditor = CodeMirror.fromTextArea($result, {
+    mode: "text/html"
+    , theme: "obsidian"
+});
+
+render();
+</script>
+</html>

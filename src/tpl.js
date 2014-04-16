@@ -118,14 +118,17 @@ var UNDEF
      * @example "false" || false || 0 || "0" || {} || [] ==> false
      */
     , toBool: function(obj) {
+        if(obj === "undefined" || obj === UNDEF || obj === null) return !1;
+
         var type = util.type(obj)
             , len = !!obj.length;
+            
         if(type === "boolean") return obj;
         if(type === "array") return len;
         if(type === "number") return obj !== 0;
 
         // TODO
-        if(type === "string") return !(obj === "0" || obj === "")
+        if(type === "string") return !(obj === "0" || obj === "");
         if(type === "object") return !!util.keys(obj).length;
         return !!obj;
     }
@@ -485,6 +488,8 @@ var UNDEF
 
     , "if": function(ast, data, tpl) {
 
+
+
         // split
         util.each(ast, function(token) {
             if(token.mark === "else") {
@@ -567,7 +572,7 @@ var UNDEF
         // SETUP3 compile
         .compile();
 
-    console.log(JSON.stringify(that.ast, null, "    "));
+    // console.log(JSON.stringify(that.ast, null, "    "));
 
     return that.data ? that.tpl : that.ast;
 }
@@ -682,4 +687,4 @@ window["tpl"].filter = filter;
 window["tpl"].engine = engine;
 
 // TODO Grunt
-window.module && (module.exports = window["tpl"]);
+// module && (module.exports = window["tpl"]);

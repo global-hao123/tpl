@@ -24,9 +24,11 @@
 
 ## Roadmap
 
+- `@root` 增加特殊内置变量指代 root
+
 - {{else if}} Conditionals supports
 - Extends / Block Template Inheritance
-- (for 区块内实现 break coutiue?)
+X (for 区块内实现 break coutiue?)
 - (自定义变量有没有必要？)
 - debug 模式，详细定位出错的具体 token 位置 行号等，同时产出可视化 debug 工具
 - 优化编译过程, 运算部分交给 web worker
@@ -34,7 +36,7 @@
 - 生态系统完善 sublime 语法插件，snippets / 文档, cheat sheets 等
 - 严格单元测试和基准测试
 
-===========跳过废话，直接看实时 [DEMO](http://view.gitlab.pro/common-ui/tpl) 边看边试，了解语法========
+=========== 跳过废话，直接看实时 [DEMO](http://view.gitlab.pro/common-ui/tpl) 边看边试，了解语法========
 
 ## GET START
 
@@ -165,6 +167,8 @@ tpl(tpl, data, {
 #### Operators(Fully supports JavaScript)
 
 - Basic operators
+
+`!` `%` `&&` `(` `)` `*` `+` `-` `.` `/` `<` `<=` `>` `>=` `[` `]` `||` `===` `!==` `==`
 
 ```
 {{"prefix " + hi + about.name + " suffix"}} *String concatenation*

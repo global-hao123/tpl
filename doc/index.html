@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Docs</title>
+
+        <link rel="stylesheet" href="static/bootstrap.min.css">
+        <link rel="stylesheet" href="static/prism.css">
+
+        <style type="text/css">
+
+            .wrap {
+                display: -webkit-flex;
+                display: flex;
+            }
+
+            h1 {
+                color: #FFF;
+                background-color: #333;
+                margin: 0 0 0.3em 0;
+                padding: 5px;
+                font-size: 20px;
+            }
+
+            nav {
+                width: 200px;
+            }
+
+            .content {
+                -webkit-flex: 1;
+                flex: 1;
+                max-width: 1000px;
+            }
+
+            section > .block {
+                padding-left: 3em;
+            }
+
+            h3 {
+                font-size: 28px;
+                letter-spacing: 2px;
+            }
+
+            h3 em {
+                letter-spacing: 0;
+                color: #DDD;
+            }
+
+            pre code {
+                font-family: Courier, monospace !important;
+                font-weight: normal;
+                color: #222222 !important;
+            }
+
+            pre[class*="language-"] {
+                margin-top: 0;
+                /*padding-top: 0;*/
+            }
+
+            nav ul {
+                padding-left: 1em;
+                list-style: none;
+            }
+
+            .nav ul ul a {
+                padding: 0 10px;
+            }
+
+            .nav-tabs {
+                margin-top: 1em;
+            }
+
+            .nav-tabs li a {
+                padding: 4px 15px;
+                font-weight: 700;
+            }
+
+            .nav-tabs li.active a {
+                border-color: #ccc;
+                border-bottom-color: transparent;
+                background-color: #f5f2f0;
+                color: #333;
+            }
+            .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+                background-color: #f5f2f0;
+            }
+
+            /*code,*/
+            pre {
+                /*background-color: #FFF !important;*/
+                border-top: none;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+
+            .table {
+                border: none;
+                width: auto;
+            }
+            .table>tbody>tr>td,
+            .table>thead>tr>th {
+                border: none;
+            }
+            .table-condensed>thead>tr>th,
+            .table-condensed>tbody>tr>td {
+                padding: 3px 10px 3px 0;
+            }
+            section {
+                margin: 0;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1>My Docs</h1>
+
+        <div class="wrap">
+
+            <nav>
+                <ul>
+                
+                    <li>
+                        <a href="#tpl"><strong>Tpl</strong></a>
+                        
+                        <ul class="">
+                            
+                                <li><a href="#tpl-preCompile">preCompile</a></li>
+                            
+                                <li><a href="#tpl-astWalker">astWalker</a></li>
+                            
+                                <li><a href="#tpl-parseToken">parseToken</a></li>
+                            
+                                <li><a href="#tpl-addToken">addToken</a></li>
+                            
+                                <li><a href="#tpl-compile">compile</a></li>
+                            
+                        </ul>
+                        
+                    </li>
+                
+                </ul>
+            </nav>
+
+            <div class="content">
+
+                
+                    
+                    <section id="tpl">
+
+                        <h2>Tpl</h2>
+
+                        
+
+                            
+                            
+                            <section id="tpl-preCompile">
+
+                            
+
+                                <h3>
+                                    preCompile
+                                    <em> ()</em>
+                                </h3>
+
+                                <div class="block">
+
+                                    <p>preCompile</p>
+
+                                    
+
+                                    
+                                    <p><strong>Returns</strong><br>
+                                        
+                                        <span class="label label-primary">[type]</span>
+                                        &nbsp;
+                                        [description]
+                                        
+                                        <!--
+                                        &nbsp;
+
+                                        -->
+                                        
+                                    </p>
+                                    
+
+                                    <ul class="nav nav-tabs">
+                                        
+                                        <li class="active"><a href="#preCompile-example-0" data-toggle="tab">Example</a></li>
+                                        
+                                        <li>
+                                            <a href="#preCompile-source" data-toggle="tab">Source</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        
+                                        <div class="active tab-pane" id="preCompile-example-0">
+                                            <pre><code class="language-javascript">// Sorry, no example available.</code></pre>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="preCompile-source">
+                                            <pre><code class="language-javascript">fn.preCompile = function() {
+    // console.time(&quot;preCompile&quot;);
+    var that = this;
+    if(that.opts.removeLineBreaks) that.tpl = filter.unwrap(that.tpl);
+
+    // Kill comments first
+    that.tpl = that.tpl.replace(that.commentReg, &quot;&quot;);
+
+    // console.timeEnd(&quot;preCompile&quot;);
+    return that;
+}</code></pre>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </section>
+                            
+                            
+                        
+
+                            
+                            
+                            <section id="tpl-astWalker">
+
+                            
+
+                                <h3>
+                                    astWalker
+                                    <em> ()</em>
+                                </h3>
+
+                                <div class="block">
+
+                                    <p>astWalker</p>
+
+                                    
+
+                                    
+                                    <p><strong>Returns</strong><br>
+                                        
+                                        <span class="label label-primary">[type]</span>
+                                        &nbsp;
+                                        [description]
+                                        
+                                        <!--
+                                        &nbsp;
+
+                                        -->
+                                        
+                                    </p>
+                                    
+
+                                    <ul class="nav nav-tabs">
+                                        
+                                        <li class="active"><a href="#astWalker-example-0" data-toggle="tab">Example</a></li>
+                                        
+                                        <li>
+                                            <a href="#astWalker-source" data-toggle="tab">Source</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        
+                                        <div class="active tab-pane" id="astWalker-example-0">
+                                            <pre><code class="language-javascript">// Sorry, no example available.</code></pre>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="astWalker-source">
+                                            <pre><code class="language-javascript">fn.astWalker = function() {
+    // console.time(&quot;astWalker&quot;);
+    var that = this;
+    that.tpl = that.tpl.replace(that.tokenReg, function() {
+        that.addToken(that.parseToken(arguments));
+        return &quot;{{&quot; + that.tokenId++ + &quot;}}&quot;;
+    });
+    // console.timeEnd(&quot;astWalker&quot;);
+    return that;
+}</code></pre>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </section>
+                            
+                            
+                        
+
+                            
+                            
+                            <section id="tpl-parseToken">
+
+                            
+
+                                <h3>
+                                    parseToken
+                                    <em> ()</em>
+                                </h3>
+
+                                <div class="block">
+
+                                    <p>parseToken</p>
+
+                                    
+
+                                    
+                                    <p><strong>Returns</strong><br>
+                                        
+                                        <span class="label label-primary">[type]</span>
+                                        &nbsp;
+                                        [description]
+                                        
+                                        <!--
+                                        &nbsp;
+
+                                        -->
+                                        
+                                    </p>
+                                    
+
+                                    <ul class="nav nav-tabs">
+                                        
+                                        <li class="active"><a href="#parseToken-example-0" data-toggle="tab">Example</a></li>
+                                        
+                                        <li>
+                                            <a href="#parseToken-source" data-toggle="tab">Source</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        
+                                        <div class="active tab-pane" id="parseToken-example-0">
+                                            <pre><code class="language-javascript">// Sorry, no example available.</code></pre>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="parseToken-source">
+                                            <pre><code class="language-javascript">fn.parseToken = function(args) {
+    var that = this
+        , content = filter.trim(args[1]);
+
+    return {
+        mark: that.keywords[content] || that.walkers[content.slice(0, 1)] || &quot;exp&quot;
+        , pos: args[3]
+        , id: that.tokenId
+        , content: content
+    };
+}</code></pre>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </section>
+                            
+                            
+                        
+
+                            
+                            
+                            <section id="tpl-addToken">
+
+                            
+
+                                <h3>
+                                    addToken
+                                    <em> (token)</em>
+                                </h3>
+
+                                <div class="block">
+
+                                    <p>addToken</p>
+
+                                    
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="3">Arguments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td><em>token</em></td>
+                                                <td><span class="label label-primary">[type]</span></td>
+                                                <td>
+                                                    [description]
+                                                    
+                                                    
+
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                    
+
+                                    
+
+                                    <ul class="nav nav-tabs">
+                                        
+                                        <li class="active"><a href="#addToken-example-0" data-toggle="tab">Example</a></li>
+                                        
+                                        <li>
+                                            <a href="#addToken-source" data-toggle="tab">Source</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        
+                                        <div class="active tab-pane" id="addToken-example-0">
+                                            <pre><code class="language-javascript">// Sorry, no example available.</code></pre>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="addToken-source">
+                                            <pre><code class="language-javascript">fn.addToken = function(token) {
+    var that = this
+        , tmp;
+
+    if(token.mark === &quot;block&quot;) {
+        that.tokenStack.push(token.id);
+        util.tap(that.ast, that.tokenStack, token);
+    }
+
+    else if(token.mark === &quot;close&quot;) {
+        tmp = util.tap(that.ast, that.tokenStack);
+        tmp.end = token.id;
+        util.tap(that.ast, that.tokenStack, tmp);
+        that.tokenStack.pop();
+    }
+
+    else {
+        tmp = that.tokenStack.slice(0);
+        tmp.push(token.id);
+        util.tap(that.ast, tmp, token);
+    }
+}</code></pre>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </section>
+                            
+                            
+                        
+
+                            
+                            
+                            <section id="tpl-compile">
+
+                            
+
+                                <h3>
+                                    compile
+                                    <em> ()</em>
+                                </h3>
+
+                                <div class="block">
+
+                                    <p>compile</p>
+
+                                    
+
+                                    
+                                    <p><strong>Returns</strong><br>
+                                        
+                                        <span class="label label-primary">[type]</span>
+                                        &nbsp;
+                                        [description]
+                                        
+                                        <!--
+                                        &nbsp;
+
+                                        -->
+                                        
+                                    </p>
+                                    
+
+                                    <ul class="nav nav-tabs">
+                                        
+                                        <li class="active"><a href="#compile-example-0" data-toggle="tab">Example</a></li>
+                                        
+                                        <li>
+                                            <a href="#compile-source" data-toggle="tab">Source</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        
+                                        <div class="active tab-pane" id="compile-example-0">
+                                            <pre><code class="language-javascript">// Sorry, no example available.</code></pre>
+                                        </div>
+                                        
+                                        <div class="tab-pane" id="compile-source">
+                                            <pre><code class="language-javascript">fn.compile = function() {
+    // console.time(&quot;compile&quot;);
+    var that = this;
+    that.data &amp;&amp; (that.tpl = helper.ROUTE(that.ast, that.data, that.tpl));
+    // console.timeEnd(&quot;compile&quot;);
+    return that;
+}
+
+// wrapper
+window[&quot;tpl&quot;] = function(template, data, opts) {
+    var result = new engine(template, data, opts);
+    return data ? result.tpl : result.ast;
+};
+
+window[&quot;tpl&quot;].VERSION = &quot;0.0.1&quot;;
+window[&quot;tpl&quot;].util = util;
+window[&quot;tpl&quot;].helper = helper;
+window[&quot;tpl&quot;].filter = filter;
+
+// (new tpl.engine()).ast
+window[&quot;tpl&quot;].engine = engine;
+
+// TODO Grunt
+window.module &amp;&amp; (module.exports = window[&quot;tpl&quot;]);</code></pre>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </section>
+                            
+                            
+                        
+                    </section>
+                    
+                
+            </div>
+        </div>
+        <script src="static/jquery-evergreen.min.js"></script>
+        <script>
+            $('.content').on('click', '.nav-tabs a', function(event) {
+
+                event.preventDefault();
+
+                var tabContainer = $(event.target).closest('.nav-tabs'),
+                        tabs = tabContainer.find('li'),
+                        tabsContent = tabContainer.parent().find('.tab-pane'),
+                        index = tabContainer.find('a').indexOf(event.target);
+
+                tabs.removeClass('active').eq(index).addClass('active');
+                tabsContent.removeClass('active').eq(index).addClass('active');
+
+            });
+        </script>
+        <script src="static/prism.js"></script>
+    </body>
+</html>
