@@ -113,7 +113,6 @@ body{
         </div>
         <div class="template">
             <textarea id="template">
-
 ## Expressions
 
 ### Delimiter
@@ -200,8 +199,6 @@ tpl(tpl, data, {
 {{ "<br>" }} *Html default escape*
 
 {{ "<br>" | unescape}} *Forced not escape*
-
-{{ "\{\{\}\}" }} *use `\` for delimiter escape*
 ```
 
 - Delimiter escape
@@ -224,6 +221,8 @@ tpl(tpl, data, {
 {{"http://www.gitlab.pro" | encodeURIComponent}} *Native decodeURIComponent*
 
 {{about.coutry[0] | slice(0, 3) | toUpperCase}} *Native slice*
+
+{{"hi|123| xx " | trim|encodeURIComponent | toUpperCase }}
 ```
 
 - Extend global filters

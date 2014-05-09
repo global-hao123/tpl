@@ -296,8 +296,8 @@ var UNDEF
      */
     , parseData: function(data) {
         if(data !== data + "") return data;
-        return window.JSON && window.JSON.parse
-            ? window.JSON.parse(data)
+        return JSON && JSON.parse
+            ? JSON.parse(data)
             : (new Function("return " + data))();
     }
 
@@ -422,17 +422,42 @@ var UNDEF
         if(/\s*[^=]=[^=]\s*/.test(result)) return "";
 
         // TODO: need supports assign?
-/*        if(assign.length > 1) {
+        /*if(assign.length > 1) {
             util.tap(data, assign[0], data[assign[1]])
         }*/
 
-        filters = result.split(/\s*[^\|\\]\|[^\|]\s*/);
+        // - `hi || encodeURIComponent`
+        // - `hi \| encodeURIComponent`
+        // bug: `{{hi|encodeURIComponent}}`
+        // filters = result.split(/\s*[^\|\\]\|[^\|]\s*/);
+
+        !function parseFilter(src, sign) {
+            sign = /[^\|\\]\|[^\|]/.exec(src);
+            if(!sign) return filters.push(filter.trim(src));
+            filters.push(filter.trim(src.slice(0, sign.index + 1)));
+            parseFilter(src.slice(sign.index + 2));
+        }(result);
 
         result = filters
             .shift()
             .replace(/[\[\$@_a-zA-Z][\.\w\[\]]*/g, function($0, $1) {
 
                 // js data type keywords check
+                
+                // TODO:
+
+                /*
+                true ==> ""
+                
+                cause:
+
+                ```
+                {{#if true}}
+                {{1}}
+                {{/if}}
+                ```
+                not good?
+                */
                 var value = ~"undefined true false null NaN".indexOf($0) ? "" : util.tap(data, $0);
 
                 return "\"" + (value === UNDEF ? "" : value) + "\""
