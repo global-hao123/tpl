@@ -47,35 +47,35 @@ X (for 区块内实现 break coutiue?)
 - from HTML
 
 ```html
-&lt;textarea&gt;
-&lt;!doctype html&gt;
-&lt;html&gt;
-    &lt;body&gt;
-        &lt;h1&gt;{{name}}&lt;/h1&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-&lt;/textarea&gt;
+<textarea>
+<!doctype html>
+<html>
+    <body>
+        <h1>{{name}}</h1>
+    </body>
+</html>
+</textarea>
 ```
 
 or
 
 ```html
-&lt;script type="text/template"&gt;
-&lt;h1&gt;{{title}}&lt;/h1&gt;
-&lt;p&gt;I am {{name}}...&lt;/p&gt;
-&lt;/script&gt;
+<script type="text/template">
+<h1>{{title}}</h1>
+<p>I am {{name}}...</p>
+</script>
 ```
 
 - from javascript
 
 ```javascript
 var tpl = function(){/*!@preserve
-&lt;!doctype html&gt;
-&lt;html&gt;
-   &lt;body&gt;
-       &lt;h1&gt;{{name}}&lt;/h1&gt;
-   &lt;/body&gt;
-&lt;/html&gt;
+<!doctype html>
+<html>
+   <body>
+       <h1>{{name}}</h1>
+   </body>
+</html>
 */0}
 ```
 
@@ -209,9 +209,9 @@ tpl(tpl, data, {
 - HTML escape
 
 ```
-{{ "&lt;br&gt;" }} *Html default escape*
+{{ "<br>" }} *Html default escape*
 
-{{ "&lt;br&gt;" | unescape}} *Forced not escape*
+{{ "<br>" | unescape}} *Forced not escape*
 
 {{ "\{\{\}\}" }} *use `\` for delimiter escape*
 ```
@@ -227,7 +227,7 @@ tpl(tpl, data, {
 - Built-in filters: `trim` `escape` `regescape` `unwrap` `decodeURIComponent` `encodeURIComponent` `decodeURI` `encodeURI` and all of the String.prototype(like `slice`, `charAt`, `toUpperCase`)
 
 ```
-{{hi + "&lt;br&gt;" | unescape}} *Forced not escape(Html default escape)*
+{{hi + "<br>" | unescape}} *Forced not escape(Html default escape)*
 
 {{"  " + hi + "  " | trim}} *trim*
 
