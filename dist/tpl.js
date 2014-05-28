@@ -98,7 +98,7 @@
             var filters = [], quotes = [], result, tmp;
             if (result = ast.content.replace(/"(?:[^\\"\r\n\f]|\\[\s\S])*"|'(?:[^\\'\n\r\f]|\\[\s\S])*'/g, function(e) {
                 return quotes.push(e.slice(1, -1)), "#{" + (quotes.length - 1) + "}";
-            }), tmp = result.match(/if\s+([^$]*)/), tmp && (result = tmp[1]), /\s*[^=]=[^=]\s*/.test(result)) return "";
+            }), tmp = result.match(/if\s+([\s\S]*)/), tmp && (result = tmp[1]), /\s*[^=]=[^=]\s*/.test(result)) return "";
             !function e(t, n) {
                 return (n = /[^\|\\]\|[^\|]/.exec(t)) ? (filters.push(filter.trim(t.slice(0, n.index + 1))), 
                 void e(t.slice(n.index + 2))) : filters.push(filter.trim(t));

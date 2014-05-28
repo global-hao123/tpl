@@ -415,7 +415,9 @@ var UNDEF
         });
 
         // if handle
-        tmp = result.match(/if\s+([^$]*)/);
+        // bug: `"#if $item.album_id".match(/if\s+([^$]*)/)`
+        // tmp = result.match(/if\s+([^$]*)/);
+        tmp = result.match(/if\s+([\s\S]*)/);
         tmp && (result = tmp[1]);
 
         // {{$alias = children}} is Illegal
