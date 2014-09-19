@@ -383,7 +383,7 @@ tpl("// {{ "\{\{#myPrivateHelper expression\}\}\{\{/name\}\}" }}", data, {
 {{* inline comments *}} *inline comments*
 
 *multi-line comments*
-{{* 
+{{*
 multi-line
 comments
 *}}
@@ -391,7 +391,7 @@ comments
             </textarea>
 
 
-<!-- 
+<!--
 <table>
     <thead>
         <tr>
@@ -415,7 +415,7 @@ comments
 
     </thead>
     <tbody>
-        
+
         </tr>
     </tbody>
 </table>
@@ -439,7 +439,7 @@ comments
     <li></li>
     {{#each list2}}
         <li></li>
-        
+
     {{/each}}
 {{/each}}
  -->
@@ -449,7 +449,7 @@ comments
 
     <div class="result">
         <textarea id="result">
-            
+
         </textarea>
     </div>
 
@@ -473,7 +473,7 @@ var root = {};
 try{
     root = eval('(' + $data.value + ')');
 } catch(e) {
-    return false;
+    // return false;
 }
 
 var introTpl = function() {/*!@preserve
@@ -510,7 +510,7 @@ CodeMirror.defineMode("mustache", function(config, parserConfig) {
         stream.eat("}");
         return "mustache";
       }
-      
+
       while (stream.next() != null && !stream.match("{{", false)) {}
       return null;
     }
