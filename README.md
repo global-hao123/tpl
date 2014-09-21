@@ -36,7 +36,7 @@ X (for 区块内实现 break coutiue?)
 - 生态系统完善 sublime 语法插件，snippets / 文档, cheat sheets 等
 - 严格单元测试和基准测试
 
-=========== 跳过废话，直接看实时 [DEMO](http://view.gitlab.pro/common-ui/tpl) 边看边试，了解语法========
+=========== 跳过废话，直接看实时 [DEMO](http://global-hao123.github.io/tpl/demo/index.html) 边看边试，了解语法========
 
 ## GET START
 
@@ -396,7 +396,7 @@ tpl("// {{ "\{\{#myPrivateHelper expression\}\}\{\{/name\}\}" }}", data, {
 {{* inline comments *}} *inline comments*
 
 *multi-line comments*
-{{* 
+{{*
 multi-line
 comments
 *}}
